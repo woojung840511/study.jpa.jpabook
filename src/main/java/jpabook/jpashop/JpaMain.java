@@ -1,6 +1,5 @@
 package jpabook.jpashop;
 
-import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.section5.Member1;
 import jpabook.jpashop.section5.Team;
 
@@ -21,29 +20,43 @@ public class JpaMain {
         tx.begin();
 
         try {
-            // 저장
+
+            // 저장1 (실패)
+/*
+            Member1 member = new Member1();
+            member.setUsername("member1");
+            em.persist(member);
+
+            Team team = new Team();
+            team.setName("TeamA");
+            
+            // member가 연관관계의 주인이기 때문에 저장이 안된다.
+            // 역방향(주인이 아닌 방향)만 연관관계 설정
+            team.getMembers().add(member); 
+            em.persist(team);
+*/
+
+            // 저장2 (성공)
             Team team = new Team();
             team.setName("TeamA");
             em.persist(team);
 
             Member1 member = new Member1();
             member.setUsername("member1");
-            member.setTeam(team); // 단방향 연관관계 설정, 참조 저장
+            member.changeTeam(team); // 연관관계 편의 메소드
             em.persist(member);
 
             em.flush();
             em.clear();
 
-            Member1 findMember = em.find(Member1.class, member.getId());
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member1> members = findTeam.getMembers();
 
-            Team findTeam = findMember.getTeam();
-            System.out.println("findTeam.getName() = " + findTeam.getName());
-
-            List<Member1> members = findMember.getTeam().getMembers();
-
+            System.out.println("===============");
             for (Member1 m : members) {
                 System.out.println("m = " + m.getUsername());
             }
+            System.out.println("===============");
 
             tx.commit();
 

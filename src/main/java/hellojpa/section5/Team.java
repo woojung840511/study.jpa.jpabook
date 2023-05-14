@@ -1,4 +1,4 @@
-package jpabook.jpashop.section5;
+package hellojpa.section5;
 
 import javax.persistence.*;
 import java.util.ArrayList;

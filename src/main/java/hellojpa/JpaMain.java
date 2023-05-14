@@ -1,7 +1,7 @@
-package jpabook.jpashop;
+package hellojpa;
 
-import jpabook.jpashop.section5.Member1;
-import jpabook.jpashop.section5.Team;
+import hellojpa.section5.Member1;
+import hellojpa.section5.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
